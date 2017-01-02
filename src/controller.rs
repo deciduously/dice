@@ -11,10 +11,13 @@ impl GameController {
     pub fn new(model: GameModel, view: GameView) -> GameController {
         GameController {
             model: model,
-            view: view
+            view: view,
         }
     }
+    pub fn start_game(&mut self) {
+        self.model.initial_infect();
+    }
     pub fn update_view(self) {
-      self.view.display(self.model);
+        self.view.display(self.model);
     }
 }

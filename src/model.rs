@@ -121,10 +121,7 @@ impl DiceHolder {
     }
     // returns an array with the counts [red, yellow, blue, black]
     pub fn total_count(&self) -> [u8; 4] {
-        [self.count("red"),
-         self.count("yellow"),
-         self.count("blue"),
-         self.count("black")]
+        [self.count("red"), self.count("yellow"), self.count("blue"), self.count("black")]
     }
 }
 
@@ -197,6 +194,6 @@ impl GameModel {
         ret
     }
     pub fn initial_infect(&mut self) {
-        self.continents[1].add(Disease::Black);
+        self.continents[3].add(Disease::Red);
     }
 }
