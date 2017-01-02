@@ -1,4 +1,5 @@
 extern crate rand;
+
 mod controller;
 mod model;
 mod view;

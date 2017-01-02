@@ -1,4 +1,3 @@
-use model::Disease;
 use model::GameModel;
 use view::GameView;
 

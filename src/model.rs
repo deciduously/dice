@@ -11,8 +11,7 @@ pub struct DiceHolder {
 }
 
 // partialeq to compare variants
-// debug to print the variant for testing
-#[derive(Debug, PartialEq)]
+#[derive(PartialEq)]
 pub enum Disease {
     Red,
     Yellow,
@@ -94,6 +93,27 @@ impl DiceHolder {
             _ => 0,
         }
     }
+    // grab random die, remove and return it
+    pub fn grab(&mut self) -> Option<Disease> {
+        if self.size() <= 0 {
+            None
+        } else {
+            // try randomly until we hit a color that exists
+            loop {
+                let color = match rand::thread_rng().gen_range(0, 4) {
+                    0 => Disease::Red,
+                    1 => Disease::Yellow,
+                    2 => Disease::Blue,
+                    3 => Disease::Black,
+                    _ => panic!("Check disease.grab() something's fucked"),
+                };
+                match self.remove(color) {
+                    Some(color) => return Some(color),
+                    None => continue,
+                }
+            }
+        }
+    }
     // remove and return an Option with the Disease specified - TODO: make this less gross
     // i'm fighting the borrow checker, not working with it
     pub fn remove(&mut self, d: Disease) -> Option<Disease> {
@@ -102,7 +122,7 @@ impl DiceHolder {
         let mut index: usize = 0;
         for (i, elem) in self.dice.iter_mut().enumerate() {
             if elem == &d {
-                // TODO cont. i'd like to be able to just return the Option from here
+                // TODO: cont. i'd like to be able to just return the Option from here
                 // but already have a mutable reference to iterate in the first place
                 found = true;
                 index = i;
@@ -194,6 +214,29 @@ impl GameModel {
         ret
     }
     pub fn initial_infect(&mut self) {
-        self.continents[3].add(Disease::Red);
+        let mut dice: Vec<Disease> = Vec::new();
+        // grab 12 random
+        for _ in 0..12 {
+            dice.push(match self.infection_bag.grab() {
+                Some(color) => color,
+                None => panic!("grab failed, but its the beginning of the game!"),
+            });
+        }
+        // roll and place
+        for i in dice.iter() {
+            let mut roll = 0;
+            // roll until we don't get a zero
+            while roll == 0 {
+                roll = i.roll();
+            }
+            // TODO: we're fighting the borrow checker again here
+            let result = match i {
+                &Disease::Red => Disease::Red,
+                &Disease::Yellow => Disease::Yellow,
+                &Disease::Blue => Disease::Blue,
+                &Disease::Black => Disease::Black,
+            };
+            self.continents[roll as usize - 1].add(result);
+        }
     }
 }
