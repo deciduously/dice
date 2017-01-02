@@ -1,26 +1,20 @@
 use model::Disease;
-use model::GameData;
+use model::GameModel;
 use view::GameView;
 
-pub struct GameController<'a> {
-    game: &'a GameData,
-    view: &'a GameView<'a>,
+pub struct GameController {
+    model: GameModel,
+    view: GameView,
 }
 
-impl<'a> GameController<'a> {
-    pub fn new(game: &'a GameData, view: &'a GameView<'a>) -> GameController<'a> {
+impl GameController {
+    pub fn new(model: GameModel, view: GameView) -> GameController {
         GameController {
-            game: game,
-            view: view,
+            model: model,
+            view: view
         }
     }
-    pub fn display(&self) {
-      self.view.display();
+    pub fn update_view(self) {
+      self.view.display(self.model);
     }
-    
-    /*
-    pub fn start_game(&mut self) {
-      self.game.initial_infect();
-    }*/
-
 }

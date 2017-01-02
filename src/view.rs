@@ -1,15 +1,14 @@
-use model::GameData;
+use model::GameModel;
 
-pub struct GameView<'a> {
-    pub game: &'a GameData,
+pub struct GameView {
 }
 
-impl<'a> GameView<'a> {
-    pub fn new(game: &'a GameData) -> GameView<'a> {
-        GameView { game: game }
+impl GameView {
+    pub fn new() -> GameView {
+        GameView {}
     }
-    pub fn display(&self) {
-        for i in self.game.continents.iter() {
+    pub fn display(&self, model: GameModel) {
+        for i in model.continents.iter() {
             print!("Continent {} - ", i.id);
             let counts = i.disease_count();
             print!(" red: {} yellow: {} blue {} black {}\n",
@@ -18,7 +17,7 @@ impl<'a> GameView<'a> {
                    counts[2],
                    counts[3]);
         }
-        let bag_count = self.game.infection_bag.total_count();
+        let bag_count = model.infection_bag.total_count();
         println!("bag - red: {} yellow: {} blue: {} black: {}\n",
                  bag_count[0],
                  bag_count[1],

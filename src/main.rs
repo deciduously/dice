@@ -1,13 +1,13 @@
 extern crate rand;
+mod controller;
 mod model;
 mod view;
-mod controller;
 
 fn main() {
-    let game = model::GameData::new();
-    let view = view::GameView::new(&game);
-    let controller = controller::GameController::new(&game, &view);
+    let model = model::GameModel::new();
+    let view = view::GameView::new();
+    let controller = controller::GameController::new(model, view);
 
     //controller.start_game();
-    controller.display();
+    controller.update_view();
 }

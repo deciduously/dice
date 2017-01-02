@@ -20,7 +20,7 @@ pub enum Disease {
     Black,
 }
 
-pub struct GameData {
+pub struct GameModel {
     pub continents: Vec<Continent>,
     pub cdc: DiceHolder,
     pub treatment_center: DiceHolder,
@@ -175,9 +175,9 @@ impl Disease {
     }
 }
 
-impl GameData {
-    pub fn new() -> GameData {
-        let mut ret = GameData {
+impl GameModel {
+    pub fn new() -> GameModel {
+        let mut ret = GameModel {
             continents: Vec::new(),
             cdc: DiceHolder::new(),
             treatment_center: DiceHolder::new(),
