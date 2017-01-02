@@ -1,5 +1,5 @@
-use model::GameModel;
-use view::GameView;
+use model::game::GameModel;
+use view::game::GameView;
 
 pub struct GameController {
     model: GameModel,

@@ -1,7 +1,6 @@
-use model::GameModel;
+use model::game::GameModel;
 
-pub struct GameView {
-}
+pub struct GameView;
 
 impl GameView {
     pub fn new() -> GameView {
