@@ -6,26 +6,6 @@ pub struct Continent {
     pub diseases: DiceHolder,
 }
 
-pub struct DiceHolder {
-    dice: Vec<Disease>,
-}
-
-// partialeq to compare variants
-#[derive(PartialEq)]
-pub enum Disease {
-    Red,
-    Yellow,
-    Blue,
-    Black,
-}
-
-pub struct GameModel {
-    pub continents: Vec<Continent>,
-    pub cdc: DiceHolder,
-    pub treatment_center: DiceHolder,
-    pub infection_bag: DiceHolder,
-}
-
 impl Continent {
     pub fn new(id: u8) -> Continent {
         Continent {
@@ -40,6 +20,11 @@ impl Continent {
     pub fn disease_count(&self) -> [u8; 4] {
         self.diseases.total_count()
     }
+}
+
+
+pub struct DiceHolder {
+    dice: Vec<Disease>,
 }
 
 impl DiceHolder {
@@ -145,6 +130,15 @@ impl DiceHolder {
     }
 }
 
+// partialeq to compare variants
+#[derive(PartialEq)]
+pub enum Disease {
+    Red,
+    Yellow,
+    Blue,
+    Black,
+}
+
 impl Disease {
     // returns result of die roll - die weights from rule book
     // 0 signifies a CDC token
@@ -190,6 +184,13 @@ impl Disease {
             }
         }
     }
+}
+
+pub struct GameModel {
+    pub continents: Vec<Continent>,
+    pub cdc: DiceHolder,
+    pub treatment_center: DiceHolder,
+    pub infection_bag: DiceHolder,
 }
 
 impl GameModel {
