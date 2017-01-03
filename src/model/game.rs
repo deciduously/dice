@@ -217,10 +217,7 @@ impl GameModel {
         let mut dice: Vec<Disease> = Vec::new();
         // grab 12 random
         for _ in 0..12 {
-            dice.push(match self.infection_bag.grab() {
-                Some(color) => color,
-                None => panic!("grab failed, but its the beginning of the game!"),
-            });
+            dice.push(self.infection_bag.grab().expect("grab failed during initial_infect"));
         }
         // roll and place
         for i in dice.iter() {
