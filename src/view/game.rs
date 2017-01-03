@@ -6,7 +6,7 @@ impl GameView {
     pub fn new() -> GameView {
         GameView {}
     }
-    pub fn display(&self, model: GameModel) {
+    pub fn display(&self, model: &GameModel) {
         for i in model.continents.iter() {
             print!("Continent {} - ", i.id);
             let counts = i.disease_count();
