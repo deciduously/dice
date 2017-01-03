@@ -16,7 +16,7 @@ impl GameView {
     }
 }
 
-fn disease_string(c: [u8; 4]) -> String {
+fn disease_string(c: [u32; 4]) -> String {
     format!("red: {} yellow: {} blue: {} black: {}",
              c[0],
              c[1],

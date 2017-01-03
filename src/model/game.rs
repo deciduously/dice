@@ -2,12 +2,12 @@ extern crate rand;
 use rand::Rng;
 
 pub struct Continent {
-    pub id: u8,
+    pub id: u32,
     pub diseases: DiceHolder,
 }
 
 impl Continent {
-    pub fn new(id: u8) -> Continent {
+    pub fn new(id: u32) -> Continent {
         Continent {
             id: id,
             diseases: DiceHolder::new(),
@@ -17,7 +17,7 @@ impl Continent {
     pub fn add(&mut self, d: Disease) {
         self.diseases.add(d);
     }
-    pub fn total_count(&self) -> [u8; 4] {
+    pub fn total_count(&self) -> [u32; 4] {
         self.diseases.total_count()
     }
 }
@@ -35,7 +35,7 @@ impl DiceHolder {
         self.dice.push(d);
     }
     // return number of given color
-    pub fn count(&self, color: &str) -> u8 {
+    pub fn count(&self, color: &str) -> u32 {
         let mut count = 0;
         match color {
             "red" | "Red" => {
@@ -124,7 +124,7 @@ impl DiceHolder {
         self.dice.len()
     }
     // returns an array with the counts [red, yellow, blue, black]
-    pub fn total_count(&self) -> [u8; 4] {
+    pub fn total_count(&self) -> [u32; 4] {
         [self.count("red"), self.count("yellow"), self.count("blue"), self.count("black")]
     }
 }
@@ -141,7 +141,7 @@ pub enum Disease {
 impl Disease {
     // returns result of die roll - die weights from rule book
     // 0 signifies a CDC token
-    pub fn roll(&self) -> u8 {
+    pub fn roll(&self) -> u32 {
         let roll = rand::thread_rng().gen_range(0, 6);
         match self {
             &Disease::Red => {
