@@ -8,19 +8,18 @@ impl GameView {
     }
     pub fn display(&self, model: &GameModel) {
         for i in model.continents.iter() {
-            print!("Continent {} - ", i.id);
-            let counts = i.disease_count();
-            print!(" red: {} yellow: {} blue {} black {}\n",
-                   counts[0],
-                   counts[1],
-                   counts[2],
-                   counts[3]);
+            println!("Continent {} - {}", i.id, &disease_string(i.total_count()));
         }
-        let bag_count = model.infection_bag.total_count();
-        println!("bag - red: {} yellow: {} blue: {} black: {}\n",
-                 bag_count[0],
-                 bag_count[1],
-                 bag_count[2],
-                 bag_count[3]);
+        println!("ctr - {}", &disease_string(model.treatment_center.total_count()));
+        println!("cdc - {}", &disease_string(model.cdc.total_count()));
+        println!("bag - {}", &disease_string(model.infection_bag.total_count()));
     }
+}
+
+fn disease_string(c: [u8; 4]) -> String {
+    format!("red: {} yellow: {} blue: {} black: {}",
+             c[0],
+             c[1],
+             c[2],
+             c[3])
 }

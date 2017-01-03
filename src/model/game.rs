@@ -17,11 +17,10 @@ impl Continent {
     pub fn add(&mut self, d: Disease) {
         self.diseases.add(d);
     }
-    pub fn disease_count(&self) -> [u8; 4] {
+    pub fn total_count(&self) -> [u8; 4] {
         self.diseases.total_count()
     }
 }
-
 
 pub struct DiceHolder {
     dice: Vec<Disease>,
