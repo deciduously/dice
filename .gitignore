@@ -1,1 +1,7 @@
-target
+/target/
+
+# this is an executable
+Cargo.lock
+
+# rustfmt makes these
+**/*.rs.bk
