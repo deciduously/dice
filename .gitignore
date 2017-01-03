@@ -1,4 +1,5 @@
 /target/
+.vscode
 
 # rustfmt makes these
 **/*.rs.bk
