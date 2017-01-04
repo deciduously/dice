@@ -1,47 +1,6 @@
-use conrod::backend::piston::{self, Window, WindowEvents, OpenGL};
-use conrod::backend::piston::event::UpdateEvent;
-
 use model;
-
 use std;
 use conrod;
-
-pub fn display_console(model: &model::game::GameModel) {
-    for i in model.continents.iter() {
-        println!("Continent {} - {}", i.id, &disease_string(i.total_count()));
-    }
-    println!("ctr - {}",
-             &disease_string(model.treatment_center.total_count()));
-    println!("cdc - {}", &disease_string(model.cdc.total_count()));
-    println!("bag - {}",
-             &disease_string(model.infection_bag.total_count()));
-}
-
-widget_ids! {
-    pub struct Ids {
-        //unique id for each widget
-        canvas,
-        header,
-        footer,
-        title,
-        body,
-        board,
-        c1,
-        c1c,
-        c2,
-        c2c,
-        c3,
-        c3c,
-        c4,
-        c4c,
-        c5,
-        c5c,
-        c6,
-        c6c,
-        players,
-        infect
-    }
-}
 
 fn disease_string(c: [u32; 4]) -> String {
     format!("red: {} yellow: {} blue: {} black: {}",
@@ -73,22 +32,21 @@ pub fn theme() -> conrod::Theme {
 }
 
 pub fn gui(ui: &mut conrod::UiCell, ids: &Ids, app: &mut model::game::GameModel) {
-    use conrod::{color, widget, Positionable, Labelable, Colorable, Sizeable, Widget};
+    use conrod::{color, widget, Positionable, Colorable, Sizeable, Widget};
 
-    const MARGIN: conrod::Scalar = 30.0;
-    const SHAPE_GAP: conrod::Scalar = 50.0;
+    const MARGIN: conrod::Scalar = 20.0;
     const TITLE_SIZE: conrod::FontSize = 42;
 
     // Canvas holds child widgets
     const TITLE: &'static str = "DICE";
     widget::Canvas::new()
-        .flow_down(&[(ids.header, widget::Canvas::new().color(color::BLUE).pad_bottom(20.0)),
+        .flow_down(&[(ids.header, widget::Canvas::new().color(color::BLUE).pad_bottom(MARGIN)),
                      (ids.body,
                       widget::Canvas::new()
                           .length(300.0)
                           .flow_right(&[(ids.board,
                                          widget::Canvas::new()
-                                             .pad(20.0)
+                                             .pad(MARGIN)
                                              .flow_down(&[(ids.c1,
                                                            widget::Canvas::new()
                                                                .color(color::GREEN)),
@@ -107,12 +65,12 @@ pub fn gui(ui: &mut conrod::UiCell, ids: &Ids, app: &mut model::game::GameModel)
                                                           (ids.c6,
                                                            widget::Canvas::new()
                                                                .color(color::GREEN))])),
-                                        (ids.players, widget::Canvas::new().pad(20.0))])),
+                                        (ids.players, widget::Canvas::new().pad(MARGIN))])),
                      (ids.footer, widget::Canvas::new().color(color::BLUE))])
         .set(ids.canvas, ui);
 
     widget::Text::new(TITLE).font_size(TITLE_SIZE).mid_top_of(ids.header).set(ids.title, ui);
-    let button = widget::Button::new().color(color::LIGHT_RED).w_h(30.0,30.0);
+    let button = widget::Button::new().color(color::LIGHT_RED).w_h(30.0, 30.0);
     for _click in button.mid_bottom_of(ids.header).set(ids.infect, ui) {
         app.initial_infect();
     }
@@ -142,4 +100,30 @@ pub fn gui(ui: &mut conrod::UiCell, ids: &Ids, app: &mut model::game::GameModel)
         .middle_of(ids.c6)
         .set(ids.c6c, ui);
 
+}
+
+widget_ids! {
+    pub struct Ids {
+        //unique id for each widget
+        canvas,
+        header,
+        footer,
+        title,
+        body,
+        board,
+        c1,
+        c1c,
+        c2,
+        c2c,
+        c3,
+        c3c,
+        c4,
+        c4c,
+        c5,
+        c5c,
+        c6,
+        c6c,
+        players,
+        infect
+    }
 }

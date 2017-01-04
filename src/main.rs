@@ -11,7 +11,7 @@ use conrod::backend::piston::event::UpdateEvent;
 
 
 fn main() {
-    const WIDTH: u32 = 800 ;
+    const WIDTH: u32 = 800;
     const HEIGHT: u32 = 600;
 
     let mut model = model::game::GameModel::new();
