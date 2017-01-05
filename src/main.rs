@@ -1,6 +1,6 @@
-#![cfg_attr(feature="clippy", feature(plugin))]
+#![cfg_attr(feature="dev", feature(plugin))]
 
-#![cfg_attr(feature="clippy", plugin(clippy))]
+#![cfg_attr(feature="dev", plugin(clippy))]
 
 #[macro_use]
 extern crate conrod;

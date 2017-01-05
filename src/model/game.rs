@@ -130,7 +130,7 @@ impl DiceHolder {
 }
 
 // partialeq to compare variants
-#[derive(PartialEq)]
+#[derive(Clone, PartialEq)]
 pub enum Disease {
     Red,
     Yellow,
@@ -226,12 +226,8 @@ impl GameModel {
             while roll == 0 {
                 roll = i.roll();
             }
-            // TODO: we're fighting the borrow checker again here
             let result = match *i {
-                Disease::Red => Disease::Red,
-                Disease::Yellow => Disease::Yellow,
-                Disease::Blue => Disease::Blue,
-                Disease::Black => Disease::Black,
+                ref i => i.clone(),
             };
             self.continents[roll as usize - 1].add(result);
         }
