@@ -1,3 +1,7 @@
+#![cfg_attr(feature="clippy", feature(plugin))]
+
+#![cfg_attr(feature="clippy", plugin(clippy))]
+
 #[macro_use]
 extern crate conrod;
 extern crate find_folder;
@@ -9,7 +13,6 @@ mod gui;
 use conrod::backend::piston::{window, Window, WindowEvents, OpenGL};
 use conrod::backend::piston::event::UpdateEvent;
 
-
 fn main() {
     const WIDTH: u32 = 800;
     const HEIGHT: u32 = 600;
@@ -17,7 +20,7 @@ fn main() {
     let mut model = model::game::GameModel::new();
 
     let opengl = OpenGL::V3_2;
-    let mut window: Window = window::WindowSettings::new("Canvas Demo", [WIDTH, HEIGHT])
+    let mut window: Window = window::WindowSettings::new("DICE", [WIDTH, HEIGHT])
         .opengl(opengl)
         .exit_on_esc(true)
         .vsync(true)

@@ -1,6 +1,7 @@
-use model;
-use std;
 use conrod;
+use std;
+
+use model;
 
 fn disease_string(c: [u32; 4]) -> String {
     format!("red: {} yellow: {} blue: {} black: {}",
@@ -70,6 +71,7 @@ pub fn gui(ui: &mut conrod::UiCell, ids: &Ids, app: &mut model::game::GameModel)
         .set(ids.canvas, ui);
 
     widget::Text::new(TITLE).font_size(TITLE_SIZE).mid_top_of(ids.header).set(ids.title, ui);
+
     let button = widget::Button::new().color(color::LIGHT_RED).w_h(30.0, 30.0);
     for _click in button.mid_bottom_of(ids.header).set(ids.infect, ui) {
         app.initial_infect();

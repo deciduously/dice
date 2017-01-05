@@ -5,6 +5,10 @@ authors = ["deciduously <bendlovy@gmail.com>"]
 
 [dependencies]
 
+clippy = {version = "*", optional = true}
 conrod = "0.47"
 find_folder = "0.3"
 rand = "0.3"
+
+[features]
+default = []

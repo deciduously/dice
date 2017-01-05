@@ -39,36 +39,36 @@ impl DiceHolder {
         let mut count = 0;
         match color {
             "red" | "Red" => {
-                for i in self.dice.iter() {
-                    match i {
-                        &Disease::Red => count += 1,
+                for i in &self.dice {
+                    match *i {
+                        Disease::Red => count += 1,
                         _ => continue,
                     }
                 }
                 count
             }
             "yellow" | "Yellow" => {
-                for i in self.dice.iter() {
-                    match i {
-                        &Disease::Yellow => count += 1,
+                for i in &self.dice {
+                    match *i {
+                        Disease::Yellow => count += 1,
                         _ => continue,
                     }
                 }
                 count
             }
             "blue" | "Blue" => {
-                for i in self.dice.iter() {
-                    match i {
-                        &Disease::Blue => count += 1,
+                for i in &self.dice {
+                    match *i {
+                        Disease::Blue => count += 1,
                         _ => continue,
                     }
                 }
                 count
             }
             "black" | "Black" => {
-                for i in self.dice.iter() {
-                    match i {
-                        &Disease::Black => count += 1,
+                for i in &self.dice {
+                    match *i {
+                        Disease::Black => count += 1,
                         _ => continue,
                     }
                 }
@@ -79,7 +79,7 @@ impl DiceHolder {
     }
     // grab random die, remove and return it
     pub fn grab(&mut self) -> Option<Disease> {
-        if self.size() <= 0 {
+        if self.size() == 0 {
             None
         } else {
             // try randomly until we hit a color that exists
@@ -143,8 +143,8 @@ impl Disease {
     // 0 signifies a CDC token
     pub fn roll(&self) -> u32 {
         let roll = rand::thread_rng().gen_range(0, 6);
-        match self {
-            &Disease::Red => {
+        match *self {
+            Disease::Red => {
                 match roll {
                     0 => 0,
                     1 | 2 => 1,
@@ -153,7 +153,7 @@ impl Disease {
                     _ => panic!("invalid random roll"),
                 }
             }
-            &Disease::Yellow => {
+            Disease::Yellow => {
                 match roll {
                     0 => 0,
                     1 | 2 => 2,
@@ -162,7 +162,7 @@ impl Disease {
                     _ => panic!("invalid random roll"),
                 }
             }
-            &Disease::Blue => {
+            Disease::Blue => {
                 match roll {
                     0 => 0,
                     1 => 1,
@@ -172,7 +172,7 @@ impl Disease {
                     _ => panic!("invalid random roll"),
                 }
             }
-            &Disease::Black => {
+            Disease::Black => {
                 match roll {
                     0 => 0,
                     1 | 2 | 3 => 3,
@@ -220,18 +220,18 @@ impl GameModel {
             dice.push(self.infection_bag.grab().expect("grab failed during initial_infect"));
         }
         // roll and place
-        for i in dice.iter() {
+        for i in &dice {
             let mut roll = 0;
             // roll until we don't get a zero
             while roll == 0 {
                 roll = i.roll();
             }
             // TODO: we're fighting the borrow checker again here
-            let result = match i {
-                &Disease::Red => Disease::Red,
-                &Disease::Yellow => Disease::Yellow,
-                &Disease::Blue => Disease::Blue,
-                &Disease::Black => Disease::Black,
+            let result = match *i {
+                Disease::Red => Disease::Red,
+                Disease::Yellow => Disease::Yellow,
+                Disease::Blue => Disease::Blue,
+                Disease::Black => Disease::Black,
             };
             self.continents[roll as usize - 1].add(result);
         }
