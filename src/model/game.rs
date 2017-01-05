@@ -226,10 +226,7 @@ impl GameModel {
             while roll == 0 {
                 roll = i.roll();
             }
-            let result = match *i {
-                ref i => i.clone(),
-            };
-            self.continents[roll as usize - 1].add(result);
+            self.continents[roll as usize - 1].add(i.clone());
         }
     }
 }
